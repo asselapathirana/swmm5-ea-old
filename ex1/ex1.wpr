@@ -1,0 +1,43 @@
+#!wing
+#!version=4.0
+##################################################################
+# Wing IDE project file                                          #
+##################################################################
+[project attributes]
+proj.file-list = [loc('../prep.bat'),
+                  loc('../projects/myproject/param.yaml'),
+                  loc('../projects/start.yaml'),
+                  loc('../res_rc.py'),
+                  loc('../run.bat'),
+                  loc('../src/about_dialog_.py'),
+                  loc('../src/action_slots.bash'),
+                  loc('../src/buil2.bat'),
+                  loc('../src/build.bat'),
+                  loc('../src/build_with_cx_freeze.py'),
+                  loc('../src/curve.py'),
+                  loc('../src/guiqwt.py'),
+                  loc('../src/mainwindow.py'),
+                  loc('../src/mainwindow_.py'),
+                  loc('../src/mainwindow_.ui'),
+                  loc('../src/parameters_dialog.py'),
+                  loc('../src/parameters_dialog_.py'),
+                  loc('../src/parameters_dialog_.ui'),
+                  loc('../src/pause_example.py'),
+                  loc('../src/pyratemp.py'),
+                  loc('../src/qrcgen.py'),
+                  loc('../src/readme.txt'),
+                  loc('../src/setup-gui.py'),
+                  loc('../src/setup.py'),
+                  loc('../src/swmm5ec.py'),
+                  loc('../src/swmm5ec.pyw'),
+                  loc('../src/swmmeaproject.py'),
+                  loc('../src/swmmedit_dialog.py'),
+                  loc('../src/swmmedit_dialog_.py'),
+                  loc('../src/swmmedit_dialog_.ui'),
+                  loc('../src/swmm_ea_controller.py'),
+                  loc('../src/swmm_ea_temp_data.py'),
+                  loc('../src/tee_test.py'),
+                  loc('../src/test.py'),
+                  loc('../src/untitled-1.py')]
+proj.file-type = 'shared'
+proj.main-file = loc('../src/swmm_ea_controller.py')

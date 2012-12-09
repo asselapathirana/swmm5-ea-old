@@ -1,0 +1,44 @@
+syntax: glob
+*~
+*.pyc
+*.pyo
+.DS_Store
+.nose
+*.egg-info
+*.bak
+*.rej
+*$py.class
+*.orig
+example.cfg
+.coverage
+nosetests.xml
+xunit.xml
+_env
+doc/.build
+dist
+build
+.noseids
+.tox
+.*.sw[nop]
+# Temporary files used by the vim editor.
+.*.swp
+
+# A hidden file created by the Mac OS X Finder.
+.DS_Store
+
+# Sqlite data file (created by databased related test)
+*.sqlite
+
+# data file of coverage.py to use for storing or reporting coverage
+.coverage
+
+# executable program
+a.out
+a.exe
+
+# d programming
+*.deps
+*.map
+*.exe
+*.o
+*.obj
