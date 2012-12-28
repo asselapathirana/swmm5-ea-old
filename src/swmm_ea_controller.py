@@ -1,12 +1,13 @@
 from PyQt4 import QtCore, QtGui
 import guiqwt
-guiqwt
+#guiqwt
 import guiqwt.plot
 import os, shutil, sys, tempfile
 
 import mainwindow
 import swmmeaproject
 from guiqwt.builder import make
+import slotdiff
 #from guiqwt import QwtPlot
 
 # program metadata
@@ -313,13 +314,26 @@ class swmmeacontroller():
         
     def get_slotted_data(self):
         sf=self.project.swmmfilename+"_"
+        
         if os.path.exists(self.project.dirname+os.sep+sf):
-            reply = QtGui.QMessageBox.information(self.ui, 'Caution ',
-                                               "There is a file named: "+ sf + " in " + self.project.dirname + 
-                                               " project directory?. This file will be opend."+
-                                               " In the next window carefully look whether this is the file you expect."+
-                                               "If it is not, manually delete the file "+sf+" and try this action again.",  
-                                               QtGui.QMessageBox.Ok, QtGui.QMessageBox.Ok)
+            sd=slotdiff.slotDiff(self.project.dirname+os.sep+self.project.swmmfilename,self.project.dirname+os.sep+sf)
+            if(sd.testDiff()):
+                print sf, " looks like derived from ", self.project.swmmfilename, ". Reusing it!"
+                self.inp_diff_passed=True
+            else:
+                self.inp_diff_passed=False
+                reply = QtGui.QMessageBox.information(self.ui, 'Caution ',
+""" There is a file named %s in directory 
+%s. 
+However, it does not look to me as it derived from %s (your current swmm file.)
+You can do two things: 
+1. Reply 'Cancel', go to the directory %s, delete the file %s and try this operation again.
+2. Reply 'OK', I will show the file %s. Then you can decide to go ahead or cancel. """ 
+                                                   % (sf, self.project.dirname, self.project.swmmfilename, self.project.dirname,
+                                                      sf, sf, ),
+                                                   QtGui.QMessageBox.Ok|QtGui.QMessageBox.Cancel, QtGui.QMessageBox.Cancel)
+                if reply==QtGui.QMessageBox.Cancel:
+                    return False
             self.project.slotted_swmmfilename=sf
         self.ups()
         return self.project.getSlottedData()
@@ -330,14 +344,14 @@ class swmmeacontroller():
     def saveSlottedSwmmfile(self,text):
         sf=self.project.swmmfilename+"_"
         fname=self.project.dirname+os.sep+sf
-        if  os.path.exists(fname):
+        if  os.path.exists(fname) and not self.inp_diff_passed :
             reply = QtGui.QMessageBox.warning(self.ui, 'Overwrite ',
                                    "Do you want to overwrite the existing file "+ sf + " in " + self.project.dirname + " project directory?\n (If 'No' all the edits will be lost!)", QtGui.QMessageBox.Yes | 
                                    QtGui.QMessageBox.No, QtGui.QMessageBox.No)
             if not  reply == QtGui.QMessageBox.Yes:
                 return False
         self.project.write_slotted_swmm_file(fname, text)
-        reply = QtGui.QMessageBox.information(self.ui, 'swmmfile with slots :'+sf+".", "File : "+sf+ " saved.", QtGui.QMessageBox.Ok, QtGui.QMessageBox.Ok)         
+        print 'swmmfile with slots :'+sf+".", "File : "+sf+ " saved."         
         self.ups()
         return True
 
